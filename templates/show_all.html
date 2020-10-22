@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang = "es">
+   <head>
+     <title>Personas</title>
+   </head>
+   <body>
+      <nav>
+         <a href = "{{ url_for('show_all') }}">Show All People</a> |
+         <a href = "{{ url_for('new') }}">Add Person</a>
+      </nav>
+
+      <aside>
+        {%- for message in get_flashed_messages() %}
+           {{ message }}
+        {%- endfor %}
+      </aside>
+      <section>      
+        <h3>People</h3>
+
+        <table>
+           <thead>
+              <tr>
+                 <th>Nombre</th>
+                 <th>Apellido</th>
+                 <th>Telefono</th>
+                 <th>Direccion</th>
+                 <th>Estado civil</th>
+                 <th colspan="2">Acctions</th>
+              </tr>
+           </thead>
+
+           <tbody>
+              {% for persona in Personas %}
+                 <tr>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.apellido }}</td>
+                    <td>{{ persona.telefono }}</td>
+                    <td>{{ persona.direccion }}</td>
+                    <td>{{ persona.estadoCivil }}</td>
+                 </tr>
+              {% endfor %}
+           </tbody>
+        </table>
+
+    </section>
+
+   </body>
+</html>

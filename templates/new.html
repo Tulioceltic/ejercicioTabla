@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Personas</title>
+</head>
+<body>
+   <nav>
+      <a href = "{{ url_for('show_all') }}">Show All People</a> |
+      <a href = "{{ url_for('new') }}">Add Person</a>
+   </nav>
+      <section>
+      <h3>People</h3>
+
+      {%- for category, message in get_flashed_messages(with_categories = true) %}
+         <div class = "alert alert-danger">
+            {{ message }}
+         </div>
+      {%- endfor %}
+
+      <form action = "{{ request.path }}" method = "post">
+         <label for = "nombre">nombre</label>
+         <input type = "text" name = "nombre" placeholder = "nombre" /><br>
+         <label for = "apellido">apellido</label>
+         <input type = "text" name = "apellido" placeholder = "apellido" /><br>
+         <label for = "telefono">telefono</label>
+         <input type = "text" name = "telefono" placeholder = "telefono" /><br>
+         <label for = "direccion">direccion</label>
+         <input type = "text" name = "direccion" placeholder = "direccion" /><br>
+         <label for = "estadoCivil">estadoCivil</label>
+         <input type = "text" name = "estadoCivil" placeholder = "estadoCivil" /><br>
+         <input type = "submit" value = "Submit" />
+      </form>
+    </section>
+   </body>
+</html>
