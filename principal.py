@@ -2,25 +2,24 @@ from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///personas.sqlite'
 app.config['SECRET_KEY'] = "random string"
 
 tabla = SQLAlchemy(app)
 
 class personas(tabla.Model):
-    id = tabla.Column('cedula', tala.Integer, primary_key = True)
-    nombre = tabla.Column(tabla.String(50))
-    primerApellido = tabla.Column(tabla.String(50))
-    telefono = tabla.Column(tabla.String(50))
-    direccion = tabla.Column(tabla.String(80))
-    estadoCivil = tabla.Column(tabla.String(15))
-
-def _init_(self, nombre, apellido, telefono, direccion, estadoCivil):
-    self.nombre = nombre
-    self.apellido = apellido
-    self.telefono = telefono
-    self.direccion = direccion
-    self.estadoCivil = estadoCivil
+   id = tabla.Column('persona_id', tabla.Integer, primary_key = True)
+   nombre = tabla.Column(tabla.String(50))
+   apellido = tabla.Column(tabla.String(50))
+   telefono = tabla.Column(tabla.String(50))
+   direccion = tabla.Column(tabla.String(80))
+   estadoCivil = tabla.Column(tabla.String(15))
+   def __init__(self, nombre, apellido, telefono, direccion, estadoCivil):
+      self.nombre = nombre
+      self.apellido = apellido
+      self.telefono = telefono
+      self.direccion = direccion
+      self.estadoCivil = estadoCivil
 
 @app.route('/')
 def show_all():
@@ -40,7 +39,7 @@ def new():
    return render_template('new.html')
     
 
-if _name_ == '_main_':
+if __name__ == '__main__':
    tabla.create_all()
    app.run(debug = True)
     
