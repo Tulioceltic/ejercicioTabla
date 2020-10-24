@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang = "es">
+<html>
    <head>
      <title>Personas</title>
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}">
    </head>
    <body>
       <nav>
-         <a href = "{{ url_for('show_all') }}">Show All People</a> |
-         <a href = "{{ url_for('new') }}">Add Person</a>
+         <a href = "{{ url_for('show_all') }}">Mostrar personas</a> |
+         <a href = "{{ url_for('new') }}">Agregar persona</a>
       </nav>
 
       <aside>
@@ -15,7 +16,7 @@
         {%- endfor %}
       </aside>
       <section>      
-        <h3>People</h3>
+        <h3>Personas</h3>
 
         <table>
            <thead>
@@ -25,12 +26,11 @@
                  <th>Telefono</th>
                  <th>Direccion</th>
                  <th>Estado civil</th>
-                 <th colspan="2">Acctions</th>
               </tr>
            </thead>
 
            <tbody>
-              {% for persona in Personas %}
+              {% for persona in personas %}
                  <tr>
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.apellido }}</td>
@@ -41,8 +41,6 @@
               {% endfor %}
            </tbody>
         </table>
-
     </section>
-
    </body>
 </html>
