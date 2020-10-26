@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <title>Estudios</title>
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}">
+   </head>
+   <body>
+      <nav>
+         <a href = "{{ url_for('show_all') }}">Mostrar personas</a> |
+      </nav>
+
+      <aside>
+        {%- for message in get_flashed_messages() %}
+           {{ message }}
+        {%- endfor %}
+      </aside>
+      <section>      
+        <h3>Estudios</h3>
+
+        <table>
+           <thead>
+              <tr>
+                 <th>Primaria</th>
+                 <th>Secundaria</th>
+                 <th>Universidad</th>
+                 <th>Otro</th>
+              </tr>
+           </thead>
+
+           <tbody>
+              {% for academi in academico %}
+                 <tr>
+                    <td>{{ academi.primaria }}</td>
+                    <td>{{ academi.secundaria }}</td>
+                    <td>{{ academi.universidad }}</td>
+                    <td>{{ academi.otros }}</td>
+                 </tr>
+              {% endfor %}
+           </tbody>
+        </table>
+    </section>
+   </body>
+</html>
