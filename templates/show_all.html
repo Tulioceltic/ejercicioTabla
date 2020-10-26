@@ -21,22 +21,24 @@
         <table>
            <thead>
               <tr>
+                 <th>Identificacion</th>
+                 <th>Foto</th>
                  <th>Nombre</th>
                  <th>Apellido</th>
                  <th>Telefono</th>
                  <th>Direccion</th>
-                 <th>Estado civil</th>
               </tr>
            </thead>
 
            <tbody>
               {% for persona in personas %}
                  <tr>
+                    <td>{{ persona.identificacion }}</td>
+                    <td>{{ persona.foto }}</td>
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.apellido }}</td>
                     <td>{{ persona.telefono }}</td>
                     <td>{{ persona.direccion }}</td>
-                    <td>{{ persona.estadoCivil }}</td>
                  </tr>
               {% endfor %}
            </tbody>
