@@ -39,6 +39,38 @@
                     <td>{{ persona.apellido }}</td>
                     <td>{{ persona.telefono }}</td>
                     <td>{{ persona.direccion }}</td>
+                    <td>
+                     <form method="POST" action="/update" style="display: inline">
+                       <input type="hidden" value="{{persona.id}}" name="oldname">
+                       <input type="submit" value="Update">
+                     </form>
+                   </td>
+                   <td>
+                     <form method="POST" action="/delete" style="display: inline">
+                       <input type="hidden" value="{{persona.id}}" name="oldname">
+                       <input type="submit" value="Delete">
+                     </form>
+                   </td>
+                   <td>
+                     <form method="POST" action="/newAcademic" style="display: inline">
+                       <input type="submit" value="New Academic">
+                     </form>
+                   </td>
+                   <td>
+                     <form method="POST" action="/showAcademic" style="display: inline">
+                       <input type="submit" value="Show Academic">
+                     </form>
+                   </td>
+                   <td>
+                    <form method="POST" action="/newIntereses" style="display: inline">
+                      <input type="submit" value="New Intereses">
+                    </form>
+                  </td>
+                  <td>
+                    <form method="POST" action="/showIntereses" style="display: inline">
+                      <input type="submit" value="Show Intereses">
+                    </form>
+                  </td>
                  </tr>
               {% endfor %}
            </tbody>
