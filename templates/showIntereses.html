@@ -20,20 +20,18 @@
         <table>
            <thead>
               <tr>
-                 <th>Institución</th>
-                 <th>Título</th>
-                 <th>Año</th>
+                 <th>Tipo</th>
+                 <th>Descripción</th>
                  <th>Id</th>
               </tr>
            </thead>
 
            <tbody>
-              {% for academi in academico %}
+              {% for interes in intereses %}
                  <tr>
-                    <td>{{ academi.institucion }}</td>
-                    <td>{{ academi.tiutlo }}</td>
-                    <td>{{ academi.anio }}</td>
-                    <td>{{ academi.persona_id }}</td>
+                    <td>{{ interes.tipo }}</td>
+                    <td>{{ interes.descripcion }}</td>
+                    <td>{{ interes.persona_id }}</td>
                  </tr>
               {% endfor %}
            </tbody>

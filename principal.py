@@ -2,7 +2,7 @@ from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///personas.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hojas_de_vida.sqlite3'
 app.config['SECRET_KEY'] = "random string"
 
 tabla = SQLAlchemy(app)
@@ -10,7 +10,7 @@ tabla = SQLAlchemy(app)
 class personas(tabla.Model):
    __tablename__ = "persona"
    
-   id = tabla.Column('persona_id', tabla.Integer, primary_key = True)
+   id = tabla.Column('id', tabla.Integer, primary_key = True)
    identificacion = tabla.Column(tabla.String(50))
    foto = tabla.Column(tabla.String(50))
    nombre = tabla.Column(tabla.String(50))
@@ -29,25 +29,33 @@ class personas(tabla.Model):
 class academico(tabla.Model):
    __tablename__ = "academico"
    
-   id = tabla.Column('persona_id', tabla.Integer, primary_key = True)
-   primaria = tabla.Column(tabla.String(50))
-   secundaria = tabla.Column(tabla.String(50))
-   universidad = tabla.Column(tabla.String(50))
-   otros = tabla.Column(tabla.String(50))
+   id = tabla.Column('id', tabla.Integer, primary_key = True)
+   institucion = tabla.Column(tabla.String(50))
+   titulo = tabla.Column(tabla.String(50))
+   anio = tabla.Column(tabla.Integer)
+   persona_id = tabla.Column(tabla.Integer , tabla.ForeignKey("persona.id"))
 
-   def __init__(self, primaria, secundaria, universidad, otros):
-      self.primaria = primaria
-      self.secundaria = secundaria
-      self.universidad = universidad
-      self.otros = otros
+   def __init__(self, institucion, titulo, anio, persona_id):
+        self.institucion = institucion
+        self.titulo = titulo
+        self.anio = anio
+        self.persona_id = persona_id
+
+class intereses(tabla.Model):
+    __tablename__ = "intereses"
+    id = tabla.Column('id', tabla.Integer, primary_key = True)
+    tipo = tabla.Column(tabla.String(50))
+    descripcion = tabla.Column(tabla.String(150))
+    persona_id = tabla.Column(tabla.Integer, tabla.ForeignKey('persona.id'))
+
+    def __init__(self, tipo, descripcion, persona_id):
+        self.tipo = tipo
+        self.descripcion = descripcion
+        self.persona_id = persona_id
 
 @app.route('/')
 def show_all():
    return render_template('show_all.html', personas = personas.query.all() )
-
-@app.route('/showAcademic')
-def showAcademic():
-   return render_template('showAcademic.html', academico = academico.query.all() )
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
@@ -65,15 +73,64 @@ def new():
 @app.route('/newAcademic', methods = ['GET', 'POST'])
 def newAcademic():
    if request.method == 'POST':
-      if not request.form['primaria'] or not request.form['secundaria'] or not request.form['universidad'] or not request.form['otros']:
+      if not request.form['institucion'] or not request.form['titulo'] or not request.form['anio']:         
          flash('Please enter all the fields', 'error')
       else:
-         academi = academico(request.form['primaria'], request.form['secundaria'], request.form['universidad'], request.form['otros'])
+         academi = academico(request.form['institucion'], request.form['titulo'], request.form['anio'], request.form['pesona_id'])
          tabla.session.add(academi)
          tabla.session.commit()
          flash('Record was successfully added')
          return redirect(url_for('showAcademic'))
    return render_template('newAcademic.html')
+
+@app.route('/showAcademic')
+def showAcademic():
+   return render_template('showAcademic.html', academico = academico.query.all() )
+
+@app.route('/newIntereses', methods = ['GET', 'POST'])
+def newIntereses():
+   if request.method == 'POST':
+      if not request.form['tipo'] or not request.form['descripcion']:         
+         flash('Please enter all the fields', 'error')
+      else:
+         interes = intereses(request.form['tipo'], request.form['descripcion'], request.form['pesona_id'])
+         tabla.session.add(interes)
+         tabla.session.commit()
+         flash('Record was successfully added')
+         return redirect(url_for('showIntereses'))
+   return render_template('newIntereses.html')
+
+@app.route('/showIntereses')
+def showIntereses():
+   return render_template('showIntereses.html', intereses = intereses.query.all() )
+
+
+@app.route("/update", methods=["POST"])
+def update():
+    name = request.form.get("oldname")
+    persona = personas.query.filter_by(id=name).first()
+    return render_template('update.html', result = persona, oldname = name)
+
+@app.route("/update_record", methods=["POST"])
+def update_record():
+    name = request.form.get("oldname")
+    persona = personas.query.filter_by(id=name).first()
+    persona.identificacion = request.form['identificacion']
+    persona.foto = request.form['foto'] 
+    persona.nombre = request.form['nombre']
+    persona.apellido = request.form['apellido']
+    persona.telefono = request.form['telefono'] 
+    persona.direccion = request.form['direccion']
+    tabla.session.commit()
+    return redirect('/')
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    name = request.form.get("oldname")
+    persona = personas.query.filter_by(id=name).first()
+    tabla.session.delete(persona)
+    tabla.session.commit()
+    return redirect("/")
     
 
 if __name__ == '__main__':

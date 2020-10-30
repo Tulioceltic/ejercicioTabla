@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Persona</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}">
+</head>
+  <body>
+     <nav>
+        <a href = "{{ url_for('show_all') }}">Show All Student</a> |
+        <a href = "{{ url_for('new') }}">Add Student</a>
+     </nav>
+     <section>
+     <h3>Persona</h3>
+      <form action = "/update_record" method = "post">
+        <input type = "hidden" name = "oldname" value = "{{ oldname }}" /><br>
+         <label for = "identificacion">Identificacion</label>
+         <input type = "text" name = "identificacion" value = "{{ result.identificacion }}" /><br>
+         <label for = "foto">Foto</label>
+         <input type = "text" name = "foto" value = "{{ result.foto }}" /><br>
+         <label for = "nombre">Nombre</label>
+         <input type = "text" name = "nombre" value = "{{ result.nombre }}" /><br>
+         <label for = "apellido">Apellido</label>
+         <input type = "text" name = "apellido" value = "{{ result.apellido }}" /><br>
+         <label for = "telefono">Telefono</label>
+         <input type = "text" name = "telefono" value = "{{ result.telefono }}" /><br>
+         <label for = "direccion">Direccion</label>
+         <input type = "text" name = "direccion" value = "{{ result.direccion }}" /><br>
+         <input type = "submit" value = "Submit" />
+      </form>
+    </section>
+   </body>
+</html>
