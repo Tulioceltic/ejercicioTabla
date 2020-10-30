@@ -10,7 +10,7 @@
       <a href = "{{ url_for('new') }}">Agregar personas</a>
    </nav>
       <section>
-      <h3>People</h3>
+      <h3>Personas</h3>
 
       {%- for category, message in get_flashed_messages(with_categories = true) %}
          <div class = "alert alert-danger">
@@ -19,6 +19,10 @@
       {%- endfor %}
 
       <form action = "{{ request.path }}" method = "post">
+         <label for = "identificacion">identificacion</label>
+         <input type = "text" name = "identificacion" placeholder = "identificacion" /><br>
+         <label for = "foto">foto</label>
+         <input type = "text" name = "foto" placeholder = "foto" /><br>
          <label for = "nombre">nombre</label>
          <input type = "text" name = "nombre" placeholder = "nombre" /><br>
          <label for = "apellido">apellido</label>
@@ -27,8 +31,6 @@
          <input type = "text" name = "telefono" placeholder = "telefono" /><br>
          <label for = "direccion">direccion</label>
          <input type = "text" name = "direccion" placeholder = "direccion" /><br>
-         <label for = "estadoCivil">estadoCivil</label>
-         <input type = "text" name = "estadoCivil" placeholder = "estadoCivil" /><br>
          <input type = "submit" value = "Submit" />
       </form>
     </section>
