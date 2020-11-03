@@ -33,6 +33,7 @@
            <tbody>
               {% for persona in personas %}
                  <tr>
+                  
                     <td>{{ persona.identificacion }}</td>
                     <td>{{ persona.foto }}</td>
                     <td>{{ persona.nombre }}</td>
@@ -44,6 +45,13 @@
                        <input type="hidden" value="{{persona.id}}" name="oldname">
                        <input type="submit" value="Update">
                      </form>
+                   </td>
+                   <td>
+                    <form action="index.php" method="post" enctype="multipart/form-data">
+                      <input type="hidden" name="acc" value="envio">
+                      <input type="file" name="archivo"><br>
+                      <button type="submit">Enviar archivo</button>
+                  </form>
                    </td>
                    <td>
                      <form method="POST" action="/delete" style="display: inline">
