@@ -1,5 +1,6 @@
 from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
+from pip._internal import models
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hojas_de_vida.sqlite3'
@@ -29,24 +30,23 @@ class personas(tabla.Model):
 class academico(tabla.Model):
    __tablename__ = "academico"
    
-   id = tabla.Column('id', tabla.Integer, primary_key = True)
-   institucion = tabla.Column(tabla.String(50))
-   titulo = tabla.Column(tabla.String(50))
-   anio = tabla.Column(tabla.Integer)
-   persona_id = tabla.Column(tabla.Integer , tabla.ForeignKey("persona.id"))
+   institucion = models.Charfield('Institucion' , blank=False , max_lengt=100)
+   titulo = models.Charfield('Titulo', blank=False , max_lengt = 100)
+   año = models.Charfield('Año finalizacion' , blank=False)
+   identificacion = models.ForeignKey(personas, on_delete=models.CASCADE)
 
    def __init__(self, institucion, titulo, anio, persona_id):
         self.institucion = institucion
         self.titulo = titulo
-        self.anio = anio
+        self.año = año
         self.persona_id = persona_id
 
 class intereses(tabla.Model):
     __tablename__ = "intereses"
-    id = tabla.Column('id', tabla.Integer, primary_key = True)
-    tipo = tabla.Column(tabla.String(50))
-    descripcion = tabla.Column(tabla.String(150))
-    persona_id = tabla.Column(tabla.Integer, tabla.ForeignKey('persona.id'))
+    
+    tipo = models.Charfield('Tipo de interes', blank=False)
+    descripcion = models.Charfield('Describe el interes', blank=False)
+    identificacion = models.ForeignKey(personas, on_delete=models.CASCADE)
 
     def __init__(self, tipo, descripcion, persona_id):
         self.tipo = tipo
